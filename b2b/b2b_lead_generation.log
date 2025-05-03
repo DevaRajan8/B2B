@@ -1,0 +1,61 @@
+2025-03-20 21:02:05,215 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-20 21:02:05,215 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-20 21:02:05,231 - INFO:  * Restarting with watchdog (windowsapi)
+2025-03-20 21:02:06,938 - WARNING:  * Debugger is active!
+2025-03-20 21:02:06,946 - INFO:  * Debugger PIN: 418-100-410
+2025-03-20 21:02:09,328 - INFO: 127.0.0.1 - - [20/Mar/2025 21:02:09] "GET / HTTP/1.1" 200 -
+2025-03-20 21:02:09,431 - INFO: 127.0.0.1 - - [20/Mar/2025 21:02:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-20 21:02:19,797 - INFO: Searching on Facebook with query: Digital Marketing B2B companies site:facebook.com
+2025-03-20 21:02:23,850 - INFO: Searching on LinkedIn with query: Digital Marketing B2B companies site:linkedin.com/company
+2025-03-20 21:02:30,531 - INFO: Groq API response received on attempt 1.
+2025-03-20 21:02:30,532 - INFO: Successfully extracted 2 leads from batch
+2025-03-20 21:02:31,721 - INFO: Groq API response received on attempt 1.
+2025-03-20 21:02:31,722 - INFO: Successfully extracted 3 leads from batch
+2025-03-20 21:02:32,499 - INFO: Groq API response received on attempt 1.
+2025-03-20 21:02:32,499 - INFO: Successfully extracted 2 leads from batch
+2025-03-20 21:02:32,500 - INFO: 127.0.0.1 - - [20/Mar/2025 21:02:32] "POST /generate HTTP/1.1" 200 -
+2025-03-20 21:05:56,826 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-20 21:05:56,826 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-20 21:05:56,834 - INFO:  * Restarting with watchdog (windowsapi)
+2025-03-20 21:05:58,623 - WARNING:  * Debugger is active!
+2025-03-20 21:05:58,629 - INFO:  * Debugger PIN: 418-100-410
+2025-03-20 21:06:05,647 - INFO: 127.0.0.1 - - [20/Mar/2025 21:06:05] "GET / HTTP/1.1" 200 -
+2025-03-20 21:06:09,426 - INFO: Searching on Facebook with query: Digital Marketing B2B companies site:facebook.com
+2025-03-20 21:06:15,623 - INFO: Groq API response received on attempt 1.
+2025-03-20 21:06:15,624 - INFO: Successfully extracted 4 leads from batch
+2025-03-20 21:06:15,625 - INFO: 127.0.0.1 - - [20/Mar/2025 21:06:15] "POST /generate HTTP/1.1" 200 -
+2025-03-20 21:06:40,898 - INFO: 127.0.0.1 - - [20/Mar/2025 21:06:40] "GET / HTTP/1.1" 200 -
+2025-03-20 21:37:01,192 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-20 21:37:01,192 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-20 21:37:01,200 - INFO:  * Restarting with watchdog (windowsapi)
+2025-03-20 21:37:02,983 - WARNING:  * Debugger is active!
+2025-03-20 21:37:02,988 - INFO:  * Debugger PIN: 418-100-410
+2025-03-20 21:37:10,945 - INFO: 127.0.0.1 - - [20/Mar/2025 21:37:10] "GET / HTTP/1.1" 200 -
+2025-03-20 21:37:11,181 - INFO: 127.0.0.1 - - [20/Mar/2025 21:37:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-20 21:37:29,864 - INFO: Searching on Facebook with query: Digital Marketing B2B companies site:facebook.com
+2025-03-20 21:37:36,005 - INFO: Groq API response received on attempt 1.
+2025-03-20 21:37:36,006 - INFO: Successfully extracted 4 leads from batch
+2025-03-20 21:37:36,007 - INFO: 127.0.0.1 - - [20/Mar/2025 21:37:36] "POST /generate HTTP/1.1" 200 -
+2025-03-21 11:13:50,291 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-21 11:13:50,291 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-21 11:13:50,319 - INFO:  * Restarting with watchdog (windowsapi)
+2025-03-21 11:13:53,108 - WARNING:  * Debugger is active!
+2025-03-21 11:13:53,120 - INFO:  * Debugger PIN: 418-100-410
+2025-03-21 11:13:55,298 - INFO: 127.0.0.1 - - [21/Mar/2025 11:13:55] "GET / HTTP/1.1" 200 -
+2025-03-21 11:13:55,652 - INFO: 127.0.0.1 - - [21/Mar/2025 11:13:55] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-12 21:36:24,064 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-12 21:36:24,065 - INFO: [33mPress CTRL+C to quit[0m
+2025-04-12 21:36:24,080 - INFO:  * Restarting with watchdog (windowsapi)
+2025-04-12 21:36:25,828 - WARNING:  * Debugger is active!
+2025-04-12 21:36:25,847 - INFO:  * Debugger PIN: 377-595-037
+2025-04-12 21:36:28,405 - INFO: 127.0.0.1 - - [12/Apr/2025 21:36:28] "GET / HTTP/1.1" 200 -
+2025-04-12 21:36:29,518 - INFO: 127.0.0.1 - - [12/Apr/2025 21:36:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-12 21:36:44,331 - INFO: Searching on Facebook with query: Digital Marketing B2B companies site:facebook.com
+2025-04-12 21:36:49,369 - INFO: Groq API response received on attempt 1.
+2025-04-12 21:36:49,369 - INFO: Successfully extracted 2 leads from batch
+2025-04-12 21:36:49,370 - INFO: 127.0.0.1 - - [12/Apr/2025 21:36:49] "POST /generate HTTP/1.1" 200 -

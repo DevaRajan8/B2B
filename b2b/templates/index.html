@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B2B Lead Generator</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* (Inline CSS from your frontend code) */
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --info: #4361ee;
+      --danger: #e63946;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f5f7fa; color: var(--dark); line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 20px 0; border-radius: var(--border-radius); margin-bottom: 30px; box-shadow: var(--box-shadow); }
+    header h1 { font-size: 2.2rem; margin-bottom: 10px; text-align: center; }
+    header p { text-align: center; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+    .search-container { background-color: white; padding: 25px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-bottom: 30px; }
+    .search-title { margin-bottom: 20px; font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; }
+    .search-title i { margin-right: 10px; }
+    .search-form { display: flex; flex-wrap: wrap; gap: 15px; }
+    .form-group { flex: 1 1 300px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+    .form-group input, .form-group select { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: var(--transition); }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
+    .btn { background-color: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: var(--border-radius); cursor: pointer; font-size: 16px; font-weight: 600; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:hover { background-color: var(--secondary); transform: translateY(-2px); }
+    .btn-block { display: block; width: 100%; }
+    .results-container { margin-top: 40px; }
+    .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .results-title { font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; }
+    .results-title i { margin-right: 10px; }
+    .export-options { display: flex; gap: 10px; }
+    .btn-sm { padding: 8px 15px; font-size: 14px; }
+    .btn-outline { background-color: transparent; border: 1px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background-color: var(--primary); color: white; }
+    .lead-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; margin-top: 20px; }
+    .lead-card { background-color: white; border-radius: var(--border-radius); padding: 20px; box-shadow: var(--box-shadow); transition: var(--transition); position: relative; overflow: hidden; }
+    .lead-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+    .confidence-badge { position: absolute; top: 20px; right: 20px; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: white; }
+    .confidence-high { background-color: #4cc9f0; }
+    .confidence-medium { background-color: #f9c74f; }
+    .confidence-low { background-color: #f72585; }
+    .lead-company { font-size: 1.2rem; margin-bottom: 10px; padding-right: 80px; color: var(--primary); }
+    .lead-industry { color: #666; margin-bottom: 15px; font-style: italic; }
+    .lead-details { margin-top: 15px; }
+    .detail-item { margin-bottom: 10px; display: flex; align-items: flex-start; }
+    .detail-icon { margin-right: 10px; color: var(--primary); width: 20px; text-align: center; }
+    .detail-text { flex: 1; word-break: break-word; }
+    .detail-text a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+    .detail-text a:hover { text-decoration: underline; }
+    .lead-actions { margin-top: 20px; display: flex; gap: 10px; }
+    .loader { display: none; text-align: center; padding: 40px 0; }
+    .loader i { font-size: 40px; color: var(--primary); animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .no-results { display: none; text-align: center; padding: 40px 0; color: #666; }
+    .pagination { display: flex; justify-content: center; margin-top: 30px; gap: 5px; }
+    .pagination button { width: 40px; height: 40px; border: 1px solid #ddd; background-color: white; border-radius: var(--border-radius); cursor: pointer; transition: var(--transition); }
+    .pagination button.active { background-color: var(--primary); color: white; border-color: var(--primary); }
+    .pagination button:hover:not(.active) { background-color: #f5f5f5; }
+    .lead-view-more { color: var(--primary); background: none; border: none; cursor: pointer; font-weight: 600; padding: 0; font-size: 14px; display: inline-flex; align-items: center; margin-top: 10px; }
+    .lead-view-more i { margin-left: 5px; transition: var(--transition); }
+    .lead-view-more:hover i { transform: translateX(3px); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 1000; overflow-y: auto; padding: 20px; }
+    .modal-content { background-color: white; max-width: 800px; margin: 40px auto; padding: 30px; border-radius: var(--border-radius); position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #666; transition: var(--transition); }
+    .modal-close:hover { color: var(--danger); }
+    .modal-header { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+    .modal-title { font-size: 1.5rem; color: var(--primary); }
+    .contact-strategy-section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee; }
+    .strategy-title { margin-bottom: 15px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+    .strategy-content { padding: 15px; background-color: #f8f9fa; border-radius: var(--border-radius); margin-bottom: 15px; }
+    .footer { margin-top: 60px; text-align: center; color: #666; padding: 20px 0; border-top: 1px solid #eee; }
+    .progress-container { display: none; margin-top: 20px; }
+    .progress-bar { height: 10px; background-color: #e0e0e0; border-radius: 5px; overflow: hidden; margin-bottom: 10px; }
+    .progress { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); width: 0%; transition: width 0.5s; }
+    .progress-text { font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>B2B Lead Generator</h1>
+      <p>Generate high-quality B2B leads with contact information in minutes.</p>
+    </header>
+
+    <section class="search-container">
+      <h2 class="search-title"><i class="fas fa-search"></i> Find Your Leads</h2>
+      <form id="leadSearchForm" class="search-form">
+        <div class="form-group">
+          <label for="industryInput">Target Industry</label>
+          <input type="text" id="industryInput" placeholder="e.g. Digital Marketing" value="Digital Marketing">
+        </div>
+        <div class="form-group">
+          <label for="platformSelect">Search Platforms</label>
+          <select id="platformSelect" multiple size="3">
+            <option value="facebook" selected>Facebook</option>
+            <option value="linkedin" selected>LinkedIn</option>
+            <option value="reddit">Reddit</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="resultsCount">Results Per Platform</label>
+          <select id="resultsCount">
+            <option value="5">5 results</option>
+            <option value="8" selected>8 results</option>
+            <option value="10">10 results</option>
+            <option value="15">15 results</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button type="submit" class="btn btn-block"><i class="fas fa-search"></i> Generate Leads</button>
+        </div>
+      </form>
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar">
+          <div class="progress" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Searching for leads...</div>
+      </div>
+    </section>
+
+    <div class="loader" id="loader">
+      <i class="fas fa-spinner"></i>
+    </div>
+    <div class="no-results" id="noResults">
+      <i class="fas fa-exclamation-circle" style="font-size: 48px; color: #ccc; margin-bottom: 20px;"></i>
+      <h3>No leads found</h3>
+      <p>Try adjusting your search criteria or selecting different platforms.</p>
+    </div>
+
+    <section class="results-container" id="resultsContainer" style="display: none;">
+      <div class="results-header">
+        <h2 class="results-title"><i class="fas fa-list"></i> <span id="resultsCount"></span> Leads Found</h2>
+        <div class="export-options">
+          <button class="btn btn-sm btn-outline" id="exportCsv"><i class="fas fa-file-csv"></i> CSV</button>
+          <button class="btn btn-sm btn-outline" id="exportExcel"><i class="fas fa-file-excel"></i> Excel</button>
+          <button class="btn btn-sm btn-outline" id="printReport"><i class="fas fa-print"></i> Print</button>
+        </div>
+      </div>
+      <div class="lead-grid" id="leadGrid">
+        <!-- Lead cards will be added here -->
+      </div>
+      <div class="pagination" id="pagination">
+        <!-- Pagination buttons -->
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 B2B Lead Generator | All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <!-- Lead Details Modal -->
+  <div class="modal" id="leadDetailsModal">
+    <div class="modal-content">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Company Name</h2>
+        <p id="modalIndustry">Industry</p>
+      </div>
+      <div class="lead-details" id="modalDetails">
+        <!-- Details will be populated dynamically -->
+      </div>
+      <div class="contact-strategy-section">
+        <h3 class="strategy-title"><i class="fas fa-bullseye"></i> Contact Strategy</h3>
+        <div class="strategy-content" id="contactStrategy">
+          <!-- Strategy content -->
+        </div>
+        <div class="lead-actions">
+          <button class="btn" id="contactNowBtn"><i class="fas fa-envelope"></i> Contact Now</button>
+          <button class="btn btn-outline" id="saveLeadBtn"><i class="fas fa-save"></i> Save Lead</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to interact with the backend API
+    const leadSearchForm = document.getElementById('leadSearchForm');
+    const loader = document.getElementById('loader');
+    const noResults = document.getElementById('noResults');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const leadGrid = document.getElementById('leadGrid');
+    const resultsCountElement = document.getElementById('resultsCount');
+    const pagination = document.getElementById('pagination');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    let allLeads = [];
+    let currentPage = 1;
+    const leadsPerPage = 6;
+
+    leadSearchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const industry = document.getElementById('industryInput').value;
+      const platformSelect = document.getElementById('platformSelect');
+      const platforms = Array.from(platformSelect.selectedOptions).map(opt => opt.value);
+      const resultsCount = document.getElementById('resultsCount').value || 8;
+
+      if (!industry || platforms.length === 0) {
+        alert('Please enter an industry and select at least one platform.');
+        return;
+      }
+
+      // Show loader and progress
+      progressContainer.style.display = 'block';
+      loader.style.display = 'block';
+      resultsContainer.style.display = 'none';
+      noResults.style.display = 'none';
+      simulateProgress();
+
+      fetch("/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ industry, platforms, resultsCount })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
+          loader.style.display = 'none';
+          progressContainer.style.display = 'none';
+          return;
+        }
+        allLeads = data;
+        resultsCountElement.textContent = allLeads.length;
+        displayLeads(allLeads, 1);
+        createPagination(allLeads.length);
+        resultsContainer.style.display = 'block';
+        loader.style.display = 'none';
+        progressContainer.style.display = 'none';
+      })
+      .catch(err => {
+        alert("Error generating leads.");
+        loader.style.display = 'none';
+        progressContainer.style.display = 'none';
+      });
+    });
+
+    function simulateProgress() {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 5;
+        if (progress > 95) {
+          clearInterval(interval);
+          return;
+        }
+        progressBar.style.width = progress + "%";
+        if (progress < 30) {
+          progressText.textContent = "Searching platforms...";
+        } else if (progress < 60) {
+          progressText.textContent = "Extracting contact information...";
+        } else if (progress < 85) {
+          progressText.textContent = "Verifying data quality...";
+        } else {
+          progressText.textContent = "Finalizing results...";
+        }
+      }, 150);
+    }
+
+    function displayLeads(leads, page) {
+      leadGrid.innerHTML = "";
+      const startIndex = (page - 1) * leadsPerPage;
+      const endIndex = startIndex + leadsPerPage;
+      const paginatedLeads = leads.slice(startIndex, endIndex);
+      paginatedLeads.forEach(lead => {
+        const card = createLeadCard(lead);
+        leadGrid.appendChild(card);
+      });
+      currentPage = page;
+      updateActivePaginationButton();
+    }
+
+    function createLeadCard(lead) {
+      const card = document.createElement('div');
+      card.className = 'lead-card';
+      const badge = document.createElement('span');
+      badge.className = `confidence-badge confidence-${lead.Confidence.toLowerCase()}`;
+      badge.textContent = lead.Confidence;
+      card.appendChild(badge);
+      const company = document.createElement('h3');
+      company.className = 'lead-company';
+      company.textContent = lead["Company Name"];
+      card.appendChild(company);
+      const industryEl = document.createElement('div');
+      industryEl.className = 'lead-industry';
+      industryEl.textContent = lead.Industry;
+      card.appendChild(industryEl);
+      const details = document.createElement('div');
+      details.className = 'lead-details';
+      if (lead["Contact Details"]) {
+        details.appendChild(createDetailItem('fa-envelope', lead["Contact Details"]));
+      }
+      if (lead["Company Website"]) {
+        details.appendChild(createDetailItem('fa-globe', `<a href="${lead["Company Website"]}" target="_blank">${lead.Domain}</a>`));
+      }
+      if (lead.LinkedIn) {
+        details.appendChild(createDetailItem('fa-linkedin', `<a href="${lead.LinkedIn}" target="_blank">Company Profile</a>`));
+      }
+      if (lead.Location) {
+        details.appendChild(createDetailItem('fa-map-marker-alt', lead.Location));
+      }
+      if (lead["Company Size"]) {
+        details.appendChild(createDetailItem('fa-users', lead["Company Size"]));
+      }
+      card.appendChild(details);
+      const viewMore = document.createElement('button');
+      viewMore.className = 'lead-view-more';
+      viewMore.innerHTML = 'View complete details <i class="fas fa-arrow-right"></i>';
+      viewMore.addEventListener('click', () => openLeadModal(lead));
+      card.appendChild(viewMore);
+      return card;
+    }
+
+    function createDetailItem(iconClass, text) {
+      const item = document.createElement('div');
+      item.className = 'detail-item';
+      const icon = document.createElement('span');
+      icon.className = `detail-icon fas ${iconClass}`;
+      item.appendChild(icon);
+      const span = document.createElement('span');
+      span.className = 'detail-text';
+      span.innerHTML = text;
+      item.appendChild(span);
+      return item;
+    }
+
+    function createPagination(totalLeads) {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(totalLeads / leadsPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.addEventListener('click', () => displayLeads(allLeads, i));
+        pagination.appendChild(btn);
+      }
+      updateActivePaginationButton();
+    }
+
+    function updateActivePaginationButton() {
+      const buttons = pagination.querySelectorAll('button');
+      buttons.forEach((btn, index) => {
+        btn.classList.toggle('active', (index + 1) === currentPage);
+      });
+    }
+
+    // Modal handling (open/close)
+    const leadDetailsModal = document.getElementById('leadDetailsModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIndustry = document.getElementById('modalIndustry');
+    const modalDetails = document.getElementById('modalDetails');
+    const contactStrategy = document.getElementById('contactStrategy');
+    modalClose.addEventListener('click', () => leadDetailsModal.style.display = 'none');
+    window.addEventListener('click', (e) => { if (e.target === leadDetailsModal) leadDetailsModal.style.display = 'none'; });
+
+    function openLeadModal(lead) {
+      modalTitle.textContent = lead["Company Name"];
+      modalIndustry.textContent = lead.Industry;
+      modalDetails.innerHTML = "";
+      const detailsToShow = [
+        { icon: 'fa-envelope', label: 'Contact:', value: lead["Contact Details"] },
+        { icon: 'fa-globe', label: 'Website:', value: `<a href="${lead["Company Website"]}" target="_blank">${lead.Domain}</a>` },
+        { icon: 'fa-linkedin', label: 'LinkedIn:', value: `<a href="${lead.LinkedIn}" target="_blank">Company Profile</a>` },
+        { icon: 'fa-user-tie', label: 'Key Contact:', value: lead["Key Contact"] },
+        { icon: 'fa-map-marker-alt', label: 'Location:', value: lead.Location },
+        { icon: 'fa-users', label: 'Company Size:', value: lead["Company Size"] },
+        { icon: 'fa-tools', label: 'Services:', value: lead.Services },
+        { icon: 'fa-comment-dots', label: 'Best Contact Method:', value: lead["Best Contact Method"] }
+      ];
+      detailsToShow.forEach(detail => {
+        if (detail.value) {
+          const item = document.createElement('div');
+          item.className = 'detail-item';
+          const icon = document.createElement('span');
+          icon.className = `detail-icon fas ${detail.icon}`;
+          item.appendChild(icon);
+          const textEl = document.createElement('span');
+          textEl.className = 'detail-text';
+          textEl.innerHTML = `<strong>${detail.label}</strong> ${detail.value}`;
+          item.appendChild(textEl);
+          modalDetails.appendChild(item);
+        }
+      });
+      contactStrategy.textContent = lead["Outreach Strategy"] || 'No specific strategy available.';
+      leadDetailsModal.style.display = 'block';
+    }
+
+    // Placeholder export and print functions
+    document.getElementById('exportCsv').addEventListener('click', () => alert('Exporting CSV...'));
+    document.getElementById('exportExcel').addEventListener('click', () => alert('Exporting Excel...'));
+    document.getElementById('printReport').addEventListener('click', () => alert('Printing report...'));
+  </script>
+</body>
+</html>
